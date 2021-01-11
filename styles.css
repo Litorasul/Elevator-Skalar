@@ -26,6 +26,14 @@ main {
     justify-content: space-around;
 }
 
+span {
+    border-bottom: solid 3px #10D18C;
+}
+
 i:hover {
     cursor: pointer;
+}
+
+.green {
+    color: #10D18C;
 }
