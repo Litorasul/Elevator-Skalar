@@ -8,12 +8,14 @@
     insidePanelEl.addEventListener('click', insidePanelHandler);
 
     let currentFloor = 4;
+    const elevatorStopsQueue = [];
     let idleTimeout;
+    let inMotion = false;
 
     currentFloorEl.textContent = currentFloor;
     doorsActionEl.textContent = 'Open';
 
-    // Buttons Interaction
+    // Button Interactions
     function ousidePanelHandler(e) {
         buttonIsPressed(e);
     }
@@ -27,8 +29,10 @@
         if (element.target.nodeName === 'I') {
             const toFloor = element.target.parentNode.classList[0];
             element.target.classList.add('green');
-
-            moveElevator(currentFloor, toFloor);
+            elevatorStopsQueue.push(toFloor);
+            if (!inMotion) {
+                goToSelectedFloors();
+            }
         }
         startIdle();
     }
@@ -41,6 +45,17 @@
     function stopIdle() {
         clearTimeout(idleTimeout);
     }
+
+    //Regular and Intermediate Stops Functionality
+    async function goToSelectedFloors() {
+        inMotion = true;
+        while (elevatorStopsQueue.length !== 0) {
+            const to = elevatorStopsQueue.shift();
+            await moveElevator(currentFloor, to);
+        }
+        inMotion = false;
+    }
+
 
     // Elevator Engine Functionality
     async function moveElevator(from, to) {
@@ -56,7 +71,7 @@
                 await nextFloor(i);
             }
         }
-        doorsActionEl.textContent = 'Open';
+        await stopOnFloor(to);
     };
 
     const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
@@ -67,5 +82,16 @@
         currentFloor = floor;
         currentFloorEl.textContent = floor;
     };
+
+    async function stopOnFloor(floor) {
+        doorsActionEl.textContent = 'Open';
+        const elements = document.getElementsByClassName(floor);
+        for (let i = 0; i < elements.length; i++) {
+            [...elements[i].children].forEach(element => {
+                element.classList.remove('green');
+            });
+        }
+        await sleep(2000);
+    }
 
 })();
