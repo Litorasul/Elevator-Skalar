@@ -1,0 +1,31 @@
+body {
+    font-family: Montserrat, sans-serif;
+    font-size: 30px;
+    margin: 0;
+}
+
+header {
+    background-color: #262947;
+    color: white;
+    padding: 10px;
+    width: 100%;
+}
+
+h2 {
+    width: 700px;
+    margin: 20px auto;
+}
+
+main {
+    width: 50%;
+    margin: 20px auto;
+}
+
+.panels-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+i:hover {
+    cursor: pointer;
+}
