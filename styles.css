@@ -39,6 +39,16 @@ span {
 
 i:hover {
     cursor: pointer;
+    color: dimgray;
+}
+
+.up,
+.down {
+    font-size: 50px;
+}
+
+.inside-panel>ol>li {
+    margin-bottom: 10px;
 }
 
 .green {
