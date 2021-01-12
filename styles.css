@@ -28,13 +28,19 @@ main {
     align-items: center;
 }
 
+.current-floor {
+    font-size: 80px;
+    color: #10D18C;
+}
+
+.doors-action {
+    font-size: 50px;
+    color: #10D18C;
+}
+
 .panels-container {
     display: flex;
     justify-content: space-around;
-}
-
-span {
-    border-bottom: solid 3px #10D18C;
 }
 
 i:hover {
