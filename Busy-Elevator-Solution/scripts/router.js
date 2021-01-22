@@ -2,19 +2,13 @@ import * as engine from './engine.js';
 
 export const routesQueue = [];
 export const elevatorState = {
-    inMotion: false,
-    direction: '',
-    from: '',
-    to: ''
+    inMotion: false
 };
 
 export async function goToSelectedFloors() {
     elevatorState.inMotion = true;
     while (routesQueue.length !== 0) {
         const currentRoute = routesQueue.shift();
-        // elevatorState.from = engine.currentFloor;
-        // elevatorState.to = to;
-        console.log(currentRoute);
         await engine.moveElevator(engine.currentFloor, currentRoute);
     }
     elevatorState.inMotion = false;
@@ -68,28 +62,4 @@ function createRoute(floor) {
     }
 
     return route;
-}
-
-export function canHaveIntermediateStop(toFloor, direction) {
-    if (!elevatorState.inMotion) {
-        return false;
-    }
-    if (elevatorState.from === '' && elevatorState.to === '') {
-        return false;
-    }
-    if (elevatorState.direction !== direction && direction !== 'fas') {
-        return false;
-    }
-    if (direction === 'up') {
-        if (toFloor < elevatorState.from || toFloor > elevatorState.to) {
-            return false;
-        }
-    }
-    if (direction === 'down') {
-        if (toFloor > elevatorState.from || toFloor < elevatorState.to) {
-            return false;
-        }
-    }
-
-    return true;
 }

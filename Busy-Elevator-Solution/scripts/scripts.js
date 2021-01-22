@@ -39,7 +39,7 @@ import * as router from './router.js';
 
     // Idle Functionality
     function startIdle() {
-        idleTimeout = setTimeout(() => engine.moveElevator(engine.currentFloor, 4), 120000);
+        idleTimeout = setTimeout(() => engine.moveElevator(engine.currentFloor, { end: 4, stops: [] }), 120000);
     }
 
     function stopIdle() {
