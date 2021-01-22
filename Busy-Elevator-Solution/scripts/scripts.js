@@ -22,21 +22,17 @@ import * as router from './router.js';
         buttonIsPressed(e);
     }
 
-    function buttonIsPressed(element) {
+    async function buttonIsPressed(element) {
         stopIdle();
         if (element.target.nodeName === 'I') {
             const toFloor = element.target.parentNode.classList[0];
             const direction = element.target.classList[0];
             element.target.classList.add('green');
-            if (router.canHaveIntermediateStop(toFloor, direction)) {
-                engine.flagFloor = toFloor;
-            } else {
-                router.elevatorStopsQueue.push(toFloor);
-                if (!router.elevatorState.inMotion) {
-                    router.goToSelectedFloors();
-                }
-            }
 
+            router.addToRoutesQueue(toFloor, direction);
+            if (!router.elevatorState.inMotion) {
+                await router.goToSelectedFloors();
+            }
         }
         startIdle();
     }
