@@ -8,6 +8,10 @@ export const elevatorState = {
 export async function goToSelectedFloors() {
     elevatorState.inMotion = true;
     while (routesQueue.length !== 0) {
+        routesQueue.forEach(e => {
+            console.log(`${e.start} - ${e.end}, stops: ${e.stops}`)
+        })
+        console.log('*****')
         const currentRoute = routesQueue.shift();
         await engine.moveElevator(engine.currentFloor, currentRoute);
     }
@@ -19,11 +23,11 @@ export function addToRoutesQueue(floor, direction) {
         if (route.stops.includes(floor) || route.end == floor) {
             break;
         }
-        if (direction) {
-            if (direction !== route.direction) {
-                continue;
-            }
-        }
+        // if (direction) {
+        //     if (direction !== route.direction) {
+        //         continue;
+        //     }
+        // }
         if (route.direction === 'up') {
             if (floor < route.start || floor > route.end) {
                 continue;
